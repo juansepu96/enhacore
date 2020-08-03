@@ -113,7 +113,7 @@ function cargarNuevoCliente(){
                 cuteAlert({
                     type: "success",
                     title: "CARGA EXITOSA",
-                    message: "<b>Usuario: "+usuario+" <br> Contraseña: "+password+"</b>",
+                    message: "<b>USUARIO: "+usuario+" <br> CONTRASEÑA: "+password+"</b>",
                     buttonText: "OK"
                 })
                 
