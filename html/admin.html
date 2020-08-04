@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <div id="modalNuevoCliente" class="modal modalCliente"> <!--Nuevo Cliente-->
+        <div id="modalNuevoCliente" class="modal"> <!--Nuevo Cliente-->
           <div class="modal-content">
                   <div class="row">
                       <h5>Nuevo Cliente</h5>
@@ -132,6 +132,61 @@
                           </div>
                           <div class="input-field col s2">
                             <button class="btn waves-effect waves-light red" type="button" onclick="CerrarNuevoCliente();" name="action">Cerrar<i class="material-icons left">close</i>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+          </div>
+        </div>
+
+        <div id="modalVerCliente" class="modal"> <!--Ver Cliente-->
+          <div class="modal-content">
+                  <div class="row">
+                      <h5>Ver Cliente</h5>
+                      <form id="verCliente" class="col s12">
+                        <div class="row">
+                          <div class="input-field col s4">
+                            <input hidden id="id_cliente" type="text">
+                            <input  id="nombre_cliente" required type="text" value=" ">
+                            <label for="nombre_cliente">Nombre</label>
+                          </div>
+                          <div class="input-field col s2">
+                            <input  readonly id="user_cliente" required type="text" value=" ">
+                            <label for="user_cliente">Usuario</label>
+                        </div>
+                          <div class="input-field col s2">
+                            <input  id="dni_cliente" required type="text" value=" ">
+                            <label for="dni_cliente">DNI</label>
+                        </div>
+                          <div class="input-field col s4">
+                              <input  id="direccion_cliente" required type="text" value=" ">
+                              <label for="direccion_cliente">Direccion</label>
+                          </div>
+                        </div>
+                       
+                        <div class="row">
+                          <div class="input-field col s3">
+                            <input  id="telefono_cliente" required type="text" value=" ">
+                            <label for="telefono_cliente">Telefono</label>
+                          </div>
+                          <div class="input-field col s3">
+                              <input id="nacimiento_cliente" type="date">
+                            <label for="nacimiento_cliente">Fecha de nacimiento</label>
+                          </div>
+                          <div class="input-field col s2">
+                            <select id="estado_cliente">
+                              <option value="ACTIVO">Activo</option>
+                              <option value="INACTIVO">Inactivo</option>
+                            </select>
+                          <label for="estado_cliente">Estado</label>
+                        </div>
+                          <div class="input-field col s2">
+                            <button class="btn waves-effect waves-light blue" type="button" onclick="ActualizarCliente();" name="action">Actualizar<i class="material-icons left">add</i>
+                            </button>
+                          </div>
+                          <div class="input-field col s2">
+                            <button class="btn waves-effect waves-light red" type="button" onclick="CerrarVerCliente();" name="action">Cerrar<i class="material-icons left">close</i>
                             </button>
                           </div>
                         </div>

@@ -3,7 +3,7 @@ $(document).ready(function(){
     $('select').formSelect();
     $('.dropdown-trigger').dropdown();
     $('.datepicker').datepicker();
-  });
+});
 
 function CargarClientes(){  
     $(".filaClientes").remove();
@@ -79,6 +79,7 @@ function CerrarNuevoCliente(){
     const elem = document.getElementById('modalNuevoCliente');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.close();
+    $('#verCliente')[0].reset();
 }
 
 function cargarNuevoCliente(){
@@ -132,4 +133,75 @@ function cargarNuevoCliente(){
             timer: 3000
           })
     }
+}
+
+function AbrirCliente(id){
+    const elem = document.getElementById('modalVerCliente');
+    const instance = M.Modal.init(elem, {dismissible: false});
+    instance.open();
+    $('#verCliente')[0].reset();
+
+    $.post("../php/ObtenerDatosCliente.php",{valorBusqueda:id}, function(rta) {
+        rta = JSON.parse(rta);
+        if(rta){ 
+            if(rta){
+                $("#id_cliente").val(rta[0].ID);
+                $("#nombre_cliente").val(rta[0].name);
+                $("#dni_cliente").val(rta[0].DNI);
+                $("#direccion_cliente").val(rta[0].dire);
+                $("#user_cliente").val(rta[0].user);
+                $("#telefono_cliente").val(rta[0].phone);
+                $("#nacimiento_cliente").val(rta[0].birthdate);
+                $("#estado_cliente").val(rta[0].state);
+                CargarClases(id);
+            }            
+        };
+    });
+}
+
+function ActualizarCliente(){
+    datos = [];
+    id=$("#id_cliente").val();
+    nombre = $("#nombre_cliente").val();
+    dni = $("#dni_cliente").val();
+    direccion = $("#direccion_cliente").val(); 
+    telefono = $("#telefono_cliente").val();
+    fnacimiento = $("#nacimiento_cliente").val();
+    estado=$("#estado_cliente").val();
+    datos.push(id,nombre,dni,telefono,estado,direccion,fnacimiento);
+    datos = JSON.stringify(datos);
+    if(nombre && dni && direccion && telefono && fnacimiento){ //Validate OK
+        $.post("../php/ActualizarUsuario.php",{valorBusqueda:datos}, function(rta) {
+            if(rta==="OK"){
+                cuteToast({
+                    type: "success", // or 'info', 'error', 'warning'
+                    message: "SE ACTUALIZO LOS DATOS CON ÉXITO",
+                    timer: 3000
+                  })
+                $('#verCliente')[0].reset();
+                CerrarNuevoCliente();
+                AbrirCliente(id);
+            }else{
+                cuteToast({
+                    type: "error", // or 'info', 'error', 'warning'
+                    message: "ERROR AL ACTUALIZAR CLIENTE. CONTACTE AL ADMINISTRADOR",
+                    timer: 3000
+                  })
+            }
+        });
+    }else{ //Validate NO
+        cuteToast({
+            type: "error", // or 'info', 'error', 'warning'
+            message: "ERROR AL ACTUALIZAR CLIENTE. COMPLETA TODOS LOS CAMPOS",
+            timer: 3000
+          })
+    }
+
+}
+
+function CerrarVerCliente(){
+    const elem = document.getElementById('modalVerCliente');
+    const instance = M.Modal.init(elem, {dismissible: false});
+    instance.close();
+    $('#verCliente')[0].reset();
 }
