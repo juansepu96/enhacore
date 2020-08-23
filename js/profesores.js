@@ -5,17 +5,17 @@ $(document).ready(function(){
     $('.datepicker').datepicker();
 });
 
-function CargarClientes(){  
-    $(".filaClientes").remove();
+function CargarProfesores(){  
+    $(".filaProfesores").remove();
     $("#errorBusqueda h3").remove();
-    $.post("./php/ObtenerClientesIniciales.php",{}, function(rta) {
-        if(rta){ 
+    $.post("./php/ObtenerProfesoresIniciales.php")
+    .then((rta)=>{
             rta = JSON.parse(rta);
-            if(rta){
+            if(rta.length>0){
                 rta.forEach(element => {
                     id=element['ID'];
                     estado=element.status;
-                    var htmlTags = '<tr id="'+id+'" class="filaClientes" onclick="AbrirCliente('+id+');">' +
+                    var htmlTags = '<tr id="'+id+'" class="filaProfesores" onclick="AbrirProfesor('+id+');">' +
                     '<td scope="row">' + element.name + '</td>' +
                     '<td>' + element.DNI + '</td>'+
                     '<td>' + element.phone+ '</td>';
@@ -24,31 +24,27 @@ function CargarClientes(){
                         }else{
                             htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td></tr>';
                         }   
-                    $('#tabla-clientes tbody').append(htmlTags);
+                    $('#tabla-profesores tbody').append(htmlTags);
                 });
             }else{
-                $('#errorBusqueda').append('<h3>NO HAY CLIENTES PARA MOSTRAR<h3>');
+                $('#errorBusqueda').append('<h3>NO HAY PROFESORES PARA MOSTRAR<h3>');
             }
-            
-        }else{
-            $('#errorBusqueda').append('<h3>ERROR DE CONEXIÓN CON LA BASE DE DATOS<h3>');
-        }
     });
 }
 
-function BuscarClientes(){
+function BuscarProfesores(){
     id = $("#buscadorCliente").val();
-    $(".filaClientes").remove();
+    $(".filaProfesores").remove();
     $("#errorBusqueda h3").remove();
     $("#buscadorCliente").val("");
-    $.post("./php/BuscarClientes.php",{valorBusqueda:id}, function(rta) {
-        if(rta){ 
+    $.post("./php/BuscarProfesores.php",{valorBusqueda:id})
+    .then((rta)=> {
             rta = JSON.parse(rta);
-            if(rta){
+            if(rta.length>0){
                 rta.forEach(element => {
                     id=element['ID'];
                     estado=element.status;
-                    var htmlTags = '<tr id="'+id+'" class="filaClientes" onclick="AbrirCliente('+id+');">' +
+                    var htmlTags = '<tr id="'+id+'" class="filaProfesores" onclick="AbrirProfesor('+id+');">' +
                     '<td scope="row">' + element.name + '</td>' +
                     '<td>' + element.DNI + '</td>'+
                     '<td>' + element.phone+ '</td>';
@@ -57,32 +53,29 @@ function BuscarClientes(){
                         }else{
                             htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td></tr>';
                         }   
-                    $('#tabla-clientes tbody').append(htmlTags);
+                    $('#tabla-profesores tbody').append(htmlTags);
                 });
             }else{
-                $('#errorBusqueda').append('<h3>NO HAY CLIENTES PARA MOSTRAR<h3>');
-            }            
-        }else{
-            $('#errorBusqueda').append('<h3>ERROR DE CONEXIÓN CON LA BASE DE DATOS<h3>');
-        }
+                $('#errorBusqueda').append('<h3>NO HAY PROFESORES PARA MOSTRAR<h3>');
+            }    
     });
 
 }
 
-function NuevoCliente(){
-    const elem = document.getElementById('modalNuevoCliente');
+function NuevoProfesor(){
+    const elem = document.getElementById('modalNuevoProfesor');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.open();
 }
 
-function CerrarNuevoCliente(){
-    const elem = document.getElementById('modalNuevoCliente');
+function CerrarNuevoProfesor(){
+    const elem = document.getElementById('modalNuevoProfesor');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.close();
-    $('#verCliente')[0].reset();
+    $('#nuevoProfesor')[0].reset();
 }
 
-function cargarNuevoCliente(){
+function cargarNuevoProfesor(){
     var usuario="";
     datos = [];
     nombre = $("#nombre").val();
@@ -100,17 +93,18 @@ function cargarNuevoCliente(){
             usuario=usuario+arrayName[i];
         }
     }
+    usuario="prof_"+usuario;
     password = dni;
-    profile="alumna";
+    profile="profesor";
     estado=$("#estado").val();
     datos.push(usuario,password,nombre,profile,dni,telefono,estado,direccion,fnacimiento);
     datos = JSON.stringify(datos);
     if(nombre && dni && direccion && telefono && fnacimiento){ //Validate OK
         $.post("./php/NuevoUsuario.php",{valorBusqueda:datos}, function(rta) {
             if(rta==="OK"){
-                $('#verCliente')[0].reset();
-                CerrarNuevoCliente();
-                CargarClientes();
+                $('#nuevoProfesor')[0].reset();
+                CerrarNuevoProfesor();
+                CargarProfesores();
                 cuteAlert({
                     type: "success",
                     title: "CARGA EXITOSA",
@@ -121,7 +115,7 @@ function cargarNuevoCliente(){
             }else{
                 cuteToast({
                     type: "error", // or 'info', 'error', 'warning'
-                    message: "ERROR AL CARGAR CLIENTE. CONTACTE AL ADMINISTRADOR",
+                    message: "ERROR AL CARGAR PROFESOR. CONTACTE AL ADMINISTRADOR",
                     timer: 3000
                   })
             }
@@ -129,62 +123,60 @@ function cargarNuevoCliente(){
     }else{ //Validate NO
         cuteToast({
             type: "error", // or 'info', 'error', 'warning'
-            message: "ERROR AL CARGAR CLIENTE. COMPLETA TODOS LOS CAMPOS",
+            message: "ERROR AL CARGAR PROFESOR. COMPLETA TODOS LOS CAMPOS",
             timer: 3000
           })
     }
 }
 
-function AbrirCliente(id){
-    const elem = document.getElementById('modalVerCliente');
+function AbrirProfesor(id){
+    const elem = document.getElementById('modalVerProfesor');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.open();
-    $('#verCliente')[0].reset();
+    $('#verProfesor')[0].reset();
 
-    $.post("./php/ObtenerDatosCliente.php",{valorBusqueda:id}, function(rta) {
+    $.post("./php/ObtenerDatosCliente.php",{valorBusqueda:id})
+    .then((rta)=>{
         rta = JSON.parse(rta);
-        if(rta){ 
-            if(rta){
-                $("#id_cliente").val(rta[0].ID);
-                $("#nombre_cliente").val(rta[0].name);
-                $("#dni_cliente").val(rta[0].DNI);
-                $("#direccion_cliente").val(rta[0].dire);
-                $("#user_cliente").val(rta[0].user);
-                $("#telefono_cliente").val(rta[0].phone);
-                $("#nacimiento_cliente").val(rta[0].birthdate);
-                $("#estado_cliente").val(rta[0].state);
-                CargarClases(id);
-            }            
-        };
+        $("#id_prof").val(rta[0].ID);
+        $("#nombre_prof").val(rta[0].name);
+        $("#dni_prof").val(rta[0].DNI);
+        $("#direccion_prof").val(rta[0].dire);
+        $("#user_prof").val(rta[0].user);
+        $("#telefono_prof").val(rta[0].phone);
+        $("#nacimiento_prof").val(rta[0].birthdate);
+        $("#estado_prof").val(rta[0].state);
+        CargarClases(id);      
     });
 }
 
-function ActualizarCliente(){
+function ActualizarProfesor(){
     datos = [];
-    id=$("#id_cliente").val();
-    nombre = $("#nombre_cliente").val();
-    dni = $("#dni_cliente").val();
-    direccion = $("#direccion_cliente").val(); 
-    telefono = $("#telefono_cliente").val();
-    fnacimiento = $("#nacimiento_cliente").val();
-    estado=$("#estado_cliente").val();
+    id=$("#id_prof").val();
+    nombre = $("#nombre_prof").val();
+    dni = $("#dni_prof").val();
+    direccion = $("#direccion_prof").val(); 
+    telefono = $("#telefono_prof").val();
+    fnacimiento = $("#nacimiento_prof").val();
+    estado=$("#estado_prof").val();
     datos.push(id,nombre,dni,telefono,estado,direccion,fnacimiento);
     datos = JSON.stringify(datos);
     if(nombre && dni && direccion && telefono && fnacimiento){ //Validate OK
-        $.post("./php/ActualizarUsuario.php",{valorBusqueda:datos}, function(rta) {
+        $.post("./php/ActualizarUsuario.php",{valorBusqueda:datos})
+        .then((rta)=>{
             if(rta==="OK"){
                 cuteToast({
                     type: "success", // or 'info', 'error', 'warning'
                     message: "SE ACTUALIZO LOS DATOS CON ÉXITO",
                     timer: 3000
                   })
-                $('#verCliente')[0].reset();
-                CerrarNuevoCliente();
-                AbrirCliente(id);
+                $('#verProfesor')[0].reset();
+                CerrarNuevoProfesor();
+                AbrirProfesor(id);
             }else{
                 cuteToast({
                     type: "error", // or 'info', 'error', 'warning'
-                    message: "ERROR AL ACTUALIZAR CLIENTE. CONTACTE AL ADMINISTRADOR",
+                    message: "ERROR AL ACTUALIZAR PROFESOR. CONTACTE AL ADMINISTRADOR",
                     timer: 3000
                   })
             }
@@ -192,16 +184,16 @@ function ActualizarCliente(){
     }else{ //Validate NO
         cuteToast({
             type: "error", // or 'info', 'error', 'warning'
-            message: "ERROR AL ACTUALIZAR CLIENTE. COMPLETA TODOS LOS CAMPOS",
+            message: "ERROR AL ACTUALIZAR PROFESOR. COMPLETA TODOS LOS CAMPOS",
             timer: 3000
           })
     }
 
 }
 
-function CerrarVerCliente(){
-    const elem = document.getElementById('modalVerCliente');
+function CerrarVerProfesor(){
+    const elem = document.getElementById('modalVerProfesor');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.close();
-    $('#verCliente')[0].reset();
+    $('#verProfesor')[0].reset();
 }

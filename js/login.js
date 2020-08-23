@@ -2,7 +2,7 @@ function Acceder(){
     user = $("#user").val();
     pass = $("#password").val();
     datos = user+"@#"+pass;
-    $.post("../php/Acceder.php",{valorBusqueda:datos})
+    $.post("./php/Acceder.php",{valorBusqueda:datos})
         .then((rta)=>{
             if(rta !="NO"){ 
                 console.log(rta);
