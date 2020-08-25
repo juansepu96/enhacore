@@ -60,14 +60,7 @@ function CargarActividad(){
         $.post("./php/NuevaActividad.php",{valorBusqueda:datos})
         .then((id)=>{
             if(id){
-                CerrarNuevaActividad();
-                CargarActividades();
-                cuteAlert({
-                    type: "success",
-                    title: "CARGA EXITOSA",
-                    message: "SE CARGÓ CON ÉXITO LA ACTIVIDAD. YA PUEDE CARGAR CLASES",
-                    buttonText: "OK"
-                })
+                
                     var formData = new FormData(document.getElementById("Carga"));
                     formData.append("id", id);
                     $.ajax({
@@ -78,7 +71,18 @@ function CargarActividad(){
                         cache: false,
                         contentType: false,
                         processData: false
-                     });
+                     })
+                     .done((r)=>{
+                        console.log(r);
+                        CerrarNuevaActividad();
+                        CargarActividades();
+                        cuteAlert({
+                                type: "success",
+                                title: "CARGA EXITOSA",
+                                message: "SE CARGÓ CON ÉXITO LA ACTIVIDAD. YA PUEDE CARGAR CLASES",
+                                buttonText: "OK"
+                            })
+                     })
                     
 
             }else{
