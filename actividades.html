@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script> <!--Moments Library-->
+    <script src="./js/cute-alert.js"></script>
+    <link rel="stylesheet" href="./styles/style2.css">
+    
+    <!--Let browser know website is optimized for mobile-->
+    <link rel="stylesheet" href="./styles/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8"/>
+    <style>
+      .imagen{
+        width:150px;
+        height:100px;
+        border-radius: 10px;
+      }
+    </style>
+    <title>Actividades - ENHACORE </title>
+  </head>
+
+  <body onload="CargarActividades();">
+    <div class="container-fluid">
+      <div id="menu"> <!--Menu de Navegacion-->
+        <nav>
+            <div class="nav-wrapper violeta">
+                <img id="logo_menu" src="./img/imagotipo.png">
+              
+              <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="./admin.html"><i class="material-icons left">account_circle</i>Clientes</a></li>
+                <li><a href="./profesores.html"><i class="material-icons left">assignment_ind</i>Profesores</a></li>
+                <li><a href="./clases.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+                <li class="active"><a href="./actividades.html"><i class="material-icons left">description</i>Actividades</a></li>
+                <li><a href="../php/backups.php"><i class="material-icons left">cloud_download</i>Copias de Seguridad</a></li>
+                <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+              </ul>
+
+              
+            </div>
+          </nav>
+          <ul id="slide-out" class="sidenav">
+            <li><div class="user-view" style="text-align: center;">
+              <div>
+                <img src="./img/imagotipo.png">
+              </div>
+            </div></li>
+            <li><a href="./admin.html"><i class="material-icons left">account_circle</i>Clientes</a></li>
+            <li><a href="./profesores.html"><i class="material-icons left">assignment_ind</i>Profesores</a></li>
+            <li><a href="./clases.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+            <li class="active"><a href="./actividades.html"><i class="material-icons left">description</i>Actividades</a></li>
+            <li><a href="../php/backups.php"><i class="material-icons left">cloud_download</i>Copias de Seguridad</a></li>
+            <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+          </ul>
+    </div>
+
+
+  <div id="actividades"> <!--Tabla Actividades-->
+    <div style="text-align: right;margin-right:50px;">
+      <div class="input-field col s2">
+        <button class="btn waves-effect waves-light violeta" type="button" onclick="NuevaActividad();" name="action">Nueva Actividad<i class="material-icons left">add</i>
+        </button>
+      </div>
+    </div>
+      
+      <table class="responsive-table centered tabla-clientes" id="tabla-actividades" >
+          <thead>
+            <tr>
+                <th>#</th>
+                <th>ACTIVIDAD</th>
+                <th>DETALLE</th>
+                <th>IMAGEN</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      <div id="errorBusqueda" style="text-align: center;">
+
+      </div>
+  </div>
+
+  <div id="modalNuevaActividad" class="modal"> <!--Nueva Actividad-->
+    <div class="modal-content">
+            <div class="row">
+                <h5>Nueva Actividad</h5>
+                  <div class="row">
+                    <div class="input-field col s4">
+                      <input  id="nombre" required type="text" >
+                      <label for="nombre">Nombre</label>
+                    </div>
+                    <div class="input-field col s8">
+                        <input  id="descripcion" required type="text" >
+                        <label for="descripcion">Descripcion</label>
+                    </div>
+                 </div>
+                 
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <form id="Carga" name="Carga">
+                        <input type="file" id="imagen_act" name="imagen_act" class="browser-default">
+                      </form>
+                     </div>
+                    <div class="input-field col s3">
+                      <button class="btn waves-effect waves-light green" type="button" onclick="CargarActividad();" name="action">Cargar<i class="material-icons left">add</i>
+                      </button>
+                    </div>
+                    <div class="input-field col s3">
+                      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarNuevaActividad();" name="action">Cerrar<i class="material-icons left">close</i>
+                      </button>
+                    </div>
+                  </div>
+              </div>
+    </div>
+  </div>
+
+  <div id="modalVerActividad" class="modal"> <!--Ver Actividad-->
+    <div class="modal-content">
+            <div class="row">
+                <h5>Editar Actividad</h5>
+                  <div class="row">
+                    <input type="text" hidden id="id_act">
+                    <div class="input-field col s4">
+                      <input  id="nombre_act" required type="text" value=" ">
+                      <label id="label2" for="nombre_act" class="active">Nombre</label>
+                    </div>
+                    <div class="input-field col s8">
+                        <input  id="descripcion_act" required type="text" value=" ">
+                        <label id="label2" for="descripcion_act" class="active">Descripcion</label>
+                    </div>
+                 </div>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <form id="Carga_2" name="Carga_2">
+                        <input type="file" id="imagen_act2" name="imagen_act2" class="browser-default">
+                      </form>
+                    </div>
+                    <div class="input-field col s3">
+                      <button class="btn waves-effect waves-light green" type="button" onclick="ActualizarActividad();" name="action">Actualizar<i class="material-icons left">add</i>
+                      </button>
+                    </div>
+                    <div class="input-field col s3">
+                      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarVerActividad();" name="action">Cerrar<i class="material-icons left">close</i>
+                      </button>
+                    </div>
+                  </div>
+              </div>
+    </div>
+  </div>
+  
+
+       
+        
+        
+        
+    </div> <!--Div del cierre de toda la pagina-->
+    <!--JavaScript at end of body for optimized loading-->
+    
+    <script src="./js/actividades.js"></script>
+  </body>
+</html>

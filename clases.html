@@ -19,40 +19,66 @@
 
   <body onload="CargarClases();">
     <div class="container-fluid">
-        <div id="menu"> <!--Menu de Navegacion-->
-            <nav>
-                <div class="nav-wrapper violeta">
-                    <img id="logo_menu" src="./img/imagotipo.png">
-                  
-                  <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                  <ul class="right hide-on-med-and-down">
-                    <li><a href="./admin.html"><i class="material-icons left">account_circle</i>Clientes</a></li>
-                    <li><a href="./profesores.html"><i class="material-icons left">add_shopping_cart</i>Profesores</a></li>
-                    <li  class="active"><a href="./clases.html"><i class="material-icons left">build</i>Clases</a></li>
-                    <li><a href="../php/backups.php"><i class="material-icons left">cloud_download</i>Copias de Seguridad</a></li>
-                    <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
-                  </ul>
-
-                  
-                </div>
-              </nav>
-              <ul id="slide-out" class="sidenav">
-                <li><div class="user-view" style="text-align: center;">
-                  <div>
-                    <img src="./img/imagotipo.png">
-                  </div>
-                </div></li>
+      <div id="menu"> <!--Menu de Navegacion-->
+        <nav>
+            <div class="nav-wrapper violeta">
+                <img id="logo_menu" src="./img/imagotipo.png">
+              
+              <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
                 <li><a href="./admin.html"><i class="material-icons left">account_circle</i>Clientes</a></li>
-                <li><a href="./profesores.html"><i class="material-icons left">add_shopping_cart</i>Profesores</a></li>
-                <li  class="active"><a href="./clases.html"><i class="material-icons left">build</i>Clases</a></li>
+                <li><a href="./profesores.html"><i class="material-icons left">assignment_ind</i>Profesores</a></li>
+                <li><a href="./clases.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+                <li class="active"><a href="./actividades.html"><i class="material-icons left">description</i>Actividades</a></li>
                 <li><a href="../php/backups.php"><i class="material-icons left">cloud_download</i>Copias de Seguridad</a></li>
                 <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
               </ul>
-        </div>
 
-       
-        
-        
+              
+            </div>
+          </nav>
+          <ul id="slide-out" class="sidenav">
+            <li><div class="user-view" style="text-align: center;">
+              <div>
+                <img src="./img/imagotipo.png">
+              </div>
+            </div></li>
+            <li><a href="./admin.html"><i class="material-icons left">account_circle</i>Clientes</a></li>
+            <li><a href="./profesores.html"><i class="material-icons left">assignment_ind</i>Profesores</a></li>
+            <li><a href="./clases.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+            <li class="active"><a href="./actividades.html"><i class="material-icons left">description</i>Actividades</a></li>
+            <li><a href="../php/backups.php"><i class="material-icons left">cloud_download</i>Copias de Seguridad</a></li>
+            <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+          </ul>
+    </div>
+
+
+  <div id="actividades"> <!--Tabla Actividades-->
+    <div style="text-align: right;margin-right:50px;">
+      <div class="input-field col s2">
+        <button class="btn waves-effect waves-light violeta" type="button" onclick="NuevaActividad();" name="action">Nueva Actividad<i class="material-icons left">add</i>
+        </button>
+      </div>
+    </div>
+      
+      <table class="responsive-table centered tabla-clientes" id="tabla-clases" >
+          <thead>
+            <tr>
+                <th>FECHA</th>
+                <th>HORA</th>
+                <th>ACTIVIDAD</th>
+                <th>PROFESOR</th>
+                <th>CUPOS</th>
+                <th>INSCRIPTOS</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      <div id="errorBusqueda" style="text-align: center;">
+      </div>
+  </div>
         
     </div> <!--Div del cierre de toda la pagina-->
     <!--JavaScript at end of body for optimized loading-->

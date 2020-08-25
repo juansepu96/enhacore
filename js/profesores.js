@@ -15,15 +15,23 @@ function CargarProfesores(){
                 rta.forEach(element => {
                     id=element['ID'];
                     estado=element.status;
+                    imagen=element.img;
                     var htmlTags = '<tr id="'+id+'" class="filaProfesores" onclick="AbrirProfesor('+id+');">' +
                     '<td scope="row">' + element.name + '</td>' +
                     '<td>' + element.DNI + '</td>'+
                     '<td>' + element.phone+ '</td>';
                         if(estado==='INACTIVO'){
-                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td></tr>';
+                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td>';
                         }else{
-                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td></tr>';
+                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td>';
                         }   
+
+                        if(imagen){
+                            imagen=imagen.substring(1);
+                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td></tr>';
+                        }else{
+                            htmlTags=htmlTags+'<td></td></tr>';
+                        }
                     $('#tabla-profesores tbody').append(htmlTags);
                 });
             }else{
@@ -72,7 +80,12 @@ function CerrarNuevoProfesor(){
     const elem = document.getElementById('modalNuevoProfesor');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.close();
-    $('#nuevoProfesor')[0].reset();
+    $("#nombre").val("");
+    $("#dni").val("");
+    $("#direccion").val(""); 
+    $("#telefono").val("");
+    $("#nacimiento").val("");
+    $("#imagen").val("");
 }
 
 function cargarNuevoProfesor(){
@@ -84,8 +97,6 @@ function cargarNuevoProfesor(){
     telefono = $("#telefono").val();
     fnacimiento = $("#nacimiento").val();
     arrayName = nombre.split(' ');
-    console.log(arrayName);
-    console.log(fnacimiento);
     for(var i=0;i<arrayName.length;i++){
         if(i!=arrayName.length-1){
             usuario=usuario+arrayName[i][0];
@@ -100,17 +111,31 @@ function cargarNuevoProfesor(){
     datos.push(usuario,password,nombre,profile,dni,telefono,estado,direccion,fnacimiento);
     datos = JSON.stringify(datos);
     if(nombre && dni && direccion && telefono && fnacimiento){ //Validate OK
-        $.post("./php/NuevoUsuario.php",{valorBusqueda:datos}, function(rta) {
-            if(rta==="OK"){
-                $('#nuevoProfesor')[0].reset();
-                CerrarNuevoProfesor();
-                CargarProfesores();
-                cuteAlert({
-                    type: "success",
-                    title: "CARGA EXITOSA",
-                    message: "<b>USUARIO: "+usuario+" <br> CONTRASEÑA: "+password+"</b>",
-                    buttonText: "OK"
-                })
+        $.post("./php/NuevoUsuario.php",{valorBusqueda:datos})
+        .then((id)=>{
+            if(id){
+                var formData = new FormData(document.getElementById("foto_prof"));
+                    formData.append("id", id);
+                    $.ajax({
+                        url: "./php/recibeProf.php",
+                        type: "post",
+                        dataType: "html",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                     })
+                    .done(()=>{
+                        CerrarNuevoProfesor();
+                        CargarProfesores();
+                        cuteAlert({
+                            type: "success",
+                            title: "CARGA EXITOSA",
+                            message: "<b>USUARIO: "+usuario+" <br> CONTRASEÑA: "+password+"</b>",
+                            buttonText: "OK"
+                        })
+                    })
+               
                 
             }else{
                 cuteToast({
@@ -133,8 +158,6 @@ function AbrirProfesor(id){
     const elem = document.getElementById('modalVerProfesor');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.open();
-    $('#verProfesor')[0].reset();
-
     $.post("./php/ObtenerDatosCliente.php",{valorBusqueda:id})
     .then((rta)=>{
         rta = JSON.parse(rta);
@@ -165,14 +188,28 @@ function ActualizarProfesor(){
         $.post("./php/ActualizarUsuario.php",{valorBusqueda:datos})
         .then((rta)=>{
             if(rta==="OK"){
-                cuteToast({
-                    type: "success", // or 'info', 'error', 'warning'
-                    message: "SE ACTUALIZO LOS DATOS CON ÉXITO",
-                    timer: 3000
-                  })
-                $('#verProfesor')[0].reset();
-                CerrarNuevoProfesor();
-                AbrirProfesor(id);
+                var formData = new FormData(document.getElementById("foto_prof2"));
+                    formData.append("id", id);
+                    $.ajax({
+                        url: "./php/recibeProf2.php",
+                        type: "post",
+                        dataType: "html",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                     })
+                    .done(()=>{
+                        CargarProfesores();
+                        CerrarVerProfesor();
+                        AbrirProfesor(id);
+                        cuteToast({
+                            type: "success", // or 'info', 'error', 'warning'
+                            message: "SE ACTUALIZO LOS DATOS CON ÉXITO",
+                            timer: 3000
+                        })
+                    })
+                
             }else{
                 cuteToast({
                     type: "error", // or 'info', 'error', 'warning'
@@ -195,5 +232,11 @@ function CerrarVerProfesor(){
     const elem = document.getElementById('modalVerProfesor');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.close();
-    $('#verProfesor')[0].reset();
+    $("#nombre_prof").val("");
+    $("#dni_prof").val("");
+    $("#direccion_prof").val(""); 
+    $("#telefono_prof").val("");
+    $("#nacimiento_prof").val("");
+    $("#imagen_prof").val("");
+    
 }
