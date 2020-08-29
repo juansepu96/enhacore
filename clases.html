@@ -14,6 +14,13 @@
     <!--Let browser know website is optimized for mobile-->
     <link rel="stylesheet" href="./styles/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8"/>
+    <style>
+      .modalxl {
+        max-height: 80%;
+        width: 80% !important;
+        overflow: scroll;
+        }
+    </style>
     <title>Clases - ENHACORE </title>
   </head>
 
@@ -28,8 +35,8 @@
               <ul class="right hide-on-med-and-down">
                 <li><a href="./admin.html"><i class="material-icons left">account_circle</i>Clientes</a></li>
                 <li><a href="./profesores.html"><i class="material-icons left">assignment_ind</i>Profesores</a></li>
-                <li><a href="./clases.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
-                <li class="active"><a href="./actividades.html"><i class="material-icons left">description</i>Actividades</a></li>
+                <li  class="active"><a href="./clases.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+                <li><a href="./actividades.html"><i class="material-icons left">description</i>Actividades</a></li>
                 <li><a href="../php/backups.php"><i class="material-icons left">cloud_download</i>Copias de Seguridad</a></li>
                 <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
               </ul>
@@ -45,18 +52,30 @@
             </div></li>
             <li><a href="./admin.html"><i class="material-icons left">account_circle</i>Clientes</a></li>
             <li><a href="./profesores.html"><i class="material-icons left">assignment_ind</i>Profesores</a></li>
-            <li><a href="./clases.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
-            <li class="active"><a href="./actividades.html"><i class="material-icons left">description</i>Actividades</a></li>
+            <li  class="active"><a href="./clases.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+            <li ><a href="./actividades.html"><i class="material-icons left">description</i>Actividades</a></li>
             <li><a href="../php/backups.php"><i class="material-icons left">cloud_download</i>Copias de Seguridad</a></li>
             <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
           </ul>
     </div>
 
+    <div class="row" id="filtros"> <!--Filtros-->
+      <h4 style="text-align: center;margin-top: 30px;">ELIJA LAS FECHAS PARA FILTRAR</h4>
+      <h5 style="text-align: center;">Por defecto se cargan las clases del dia de hoy</h5>
+      <div class="input-field col s6" >
+          <input type="date" id="filter_fecha_desde" onchange="ActualizarTabla();">
+          <label for="filter_fecha_desde">DESDE: </label>
+        </div>
+        <div class="input-field col s6">
+          <input type="date" id="filter_fecha_hasta" onchange="ActualizarTabla();">
+          <label for ="filter_fecha_hasta">HASTA: </label>
+        </div>             
+  </div>
 
-  <div id="actividades"> <!--Tabla Actividades-->
+  <div id="clases"> <!--Tabla Clases-->
     <div style="text-align: right;margin-right:50px;">
       <div class="input-field col s2">
-        <button class="btn waves-effect waves-light violeta" type="button" onclick="NuevaActividad();" name="action">Nueva Actividad<i class="material-icons left">add</i>
+        <button class="btn waves-effect waves-light violeta" type="button" onclick="NuevaClase();" name="action">Nueva Clase<i class="material-icons left">add</i>
         </button>
       </div>
     </div>
@@ -78,6 +97,65 @@
         </table>
       <div id="errorBusqueda" style="text-align: center;">
       </div>
+  </div>
+
+  <div id="modalElegirProfesor" class="modal modalxl"> <!--Nuevo Elegir Profesor-->
+    <div class="modal-content">
+            <div class="row">
+                <h4 style="text-align: center;">ELIJA UN PROFESOR</h4>
+                <div id="profesores">
+
+                </div>
+              </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarElegirProfesor();" name="action">Cerrar<i class="material-icons left">close</i>
+      </button>
+    </div>
+  </div>
+
+  <div id="modalElegirActividad" class="modal modalxl"> <!--Nuevo Elegir Actividad-->
+    <div class="modal-content">
+            <div class="row" >
+              <input type="text" hidden id="id_profesor">
+                <h4 style="text-align: center;">ELIJA UNA ACTIVIDAD</h4>
+                <div id="actividades">
+
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarElegirActividad();" name="action">Cerrar<i class="material-icons left">close</i>
+      </button>
+    </div>
+  </div>
+  <div id="modalCompletarDatos" class="modal modalxl"> <!--Nuevo Completar Datos-->
+    <div class="modal-content">
+            <div class="row" >
+              <input type="text" hidden id="id_profesor2">
+              <input type="text" hidden id="id_actividad">
+                <h4 style="text-align: center;">COMPLETAR DATOS</h4>
+
+                      <div class="input-field col s4">
+                        <input  id="fecha" required type="date" >
+                        <label for="fecha">Fecha</label>
+                      </div>
+                      <div class="input-field col s4">
+                        <input  id="hora" required type="time" >
+                        <label for="hora">hora</label>
+                    </div>
+                      <div class="input-field col s4">
+                          <input  id="cupos" required type="number" >
+                          <label for="cupos">Cupos</label>
+                      </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light green" type="button" onclick="CargarNuevaClase();" name="action">Cargar Clase<i class="material-icons left">add</i>
+      </button>
+      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarCompletarDatos();" name="action">Cerrar<i class="material-icons left">close</i>
+      </button>
+    </div>
   </div>
         
     </div> <!--Div del cierre de toda la pagina-->

@@ -48,6 +48,8 @@ function CerrarNuevaActividad(){
     $("#nombre").val("");
     $("#descripcion").val("");
     $("#imagen_act").val("");
+    var scroll= { "overflow": 'scroll'};
+    $("body").css(scroll);
 }
 
 function CargarActividad(){
@@ -73,7 +75,6 @@ function CargarActividad(){
                         processData: false
                      })
                      .done((r)=>{
-                        console.log(r);
                         CerrarNuevaActividad();
                         CargarActividades();
                         cuteAlert({
@@ -171,4 +172,6 @@ function CerrarVerActividad(){
     const elem = document.getElementById('modalVerActividad');
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.close();
+    var scroll= { "overflow": 'scroll'};
+    $("body").css(scroll);
 }

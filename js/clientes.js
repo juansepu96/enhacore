@@ -80,6 +80,8 @@ function CerrarNuevoCliente(){
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.close();
     $('#verCliente')[0].reset();
+    var scroll= { "overflow": 'scroll'};
+    $("body").css(scroll);
 }
 
 function cargarNuevoCliente(){
@@ -204,4 +206,6 @@ function CerrarVerCliente(){
     const instance = M.Modal.init(elem, {dismissible: false});
     instance.close();
     $('#verCliente')[0].reset();
+    var scroll= { "overflow": 'scroll'};
+    $("body").css(scroll);
 }

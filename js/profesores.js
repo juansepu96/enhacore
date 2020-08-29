@@ -86,6 +86,9 @@ function CerrarNuevoProfesor(){
     $("#telefono").val("");
     $("#nacimiento").val("");
     $("#imagen").val("");
+    
+    var scroll= { "overflow": 'scroll'};
+    $("body").css(scroll);
 }
 
 function cargarNuevoProfesor(){
@@ -238,5 +241,8 @@ function CerrarVerProfesor(){
     $("#telefono_prof").val("");
     $("#nacimiento_prof").val("");
     $("#imagen_prof").val("");
+    
+    var scroll= { "overflow": 'scroll'};
+    $("body").css(scroll);
     
 }
