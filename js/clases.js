@@ -56,7 +56,7 @@ function NuevaClase(){
             rta.forEach((e)=>{
                 if(e.status="ACTIVO"){
                     imagen=e.img.substring(1);
-                    html = html + ' <div class="col-md-4" onclick="ElegirActividad('+e.ID+');"> '+
+                    html = html + ' <div class="col s12 m6 l3" style="width:90%;" onclick="ElegirActividad('+e.ID+');"> '+
                                 ' <div class="card profile-card-3"> ' +
                                     ' <div class="background-block">' +
                                         '<img src="./img/logo_letras.png" alt="profile-sample1" class="background"/>' +
@@ -100,7 +100,7 @@ function ElegirActividad(id){
             var html="";
             rta.forEach((e)=>{
                     imagen=e.img.substring(1);
-                    html = html + ' <div class="col-md-4" onclick="CargarRestantes('+e.ID+');"> '+
+                    html = html + ' <div class="col s12 m6 l3" style="width:90%;" onclick="CargarRestantes('+e.ID+');"> '+
                     ' <div class="card profile-card-3"> ' +
                         ' <div class="background-block">' +
                             '<img src="'+imagen+'" alt="profile-sample1" class="background2"/>' +

@@ -108,8 +108,9 @@ function cargarNuevoCliente(){
     datos.push(usuario,password,nombre,profile,dni,telefono,estado,direccion,fnacimiento);
     datos = JSON.stringify(datos);
     if(nombre && dni && direccion && telefono && fnacimiento){ //Validate OK
-        $.post("./php/NuevoUsuario.php",{valorBusqueda:datos}, function(rta) {
-            if(rta==="OK"){
+        $.post("./php/NuevoUsuario.php",{valorBusqueda:datos})
+        .then((rta)=>{
+            if(rta!=null){
                 $('#verCliente')[0].reset();
                 CerrarNuevoCliente();
                 CargarClientes();

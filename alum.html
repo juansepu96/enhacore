@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script> <!--Moments Library-->
+    <script src="./js/cute-alert.js"></script>
+    <link rel="stylesheet" href="./styles/style2.css">
+    
+    <!--Let browser know website is optimized for mobile-->
+    <link rel="stylesheet" href="./styles/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8"/>
+    <style>
+      .modalxl {
+        max-height: 80%;
+        width: 80% !important;
+        overflow: scroll;
+        }
+    </style>
+    <title>Bienvenido - ENHACORE </title>
+  </head>
+
+  <body onload="CargarClases();">
+    <div class="container-fluid">
+      <div id="menu"> <!--Menu de Navegacion-->
+        <nav>
+            <div class="nav-wrapper violeta">
+                <img id="logo_menu" src="./img/imagotipo.png">
+              
+              <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                <li  class="active"><a href="./alum.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+                <li><a href="./profile.html"><i class="material-icons left">account_circle</i>Perfil</a></li>
+                <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+              </ul>
+
+              
+            </div>
+          </nav>
+          <ul id="slide-out" class="sidenav">
+            <li><div class="user-view" style="text-align: center;">
+              <div>
+                <img src="./img/imagotipo.png">
+              </div>
+            </div></li>
+                <li  class="active"><a href="./alum.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+                <li><a href="./profile.html"><i class="material-icons left">account_circle</i>Perfil</a></li>
+                <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+          </ul>
+    </div>
+
+    <div class="row" id="filtros" style="padding-top:10px;"> <!--Filtros-->
+        <div id="welcome" class="col s7"></div>
+        <div class="col s4" style="margin-top:30px;margin-right:15px;">
+            <div class="input-field col s12" >
+                <input type="date" id="filtro_fecha" onchange="CargarClases();">
+                <label for="filtro_fecha">SELECCIONE UNA FECHA</label>
+              </div>   
+        </div>
+           
+  </div>
+
+  <div id="clases" class="row"> <!--Tabla Clases-->
+          
+  </div>
+
+  <div id="modalElegirProfesor" class="modal modalxl"> <!-- Inscripcion a la clase -->
+    <div class="modal-content">
+            <div class="row">
+                <h4 style="text-align: center;">ELIJA UN PROFESOR</h4>
+                <div id="profesores">
+
+                </div>
+              </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarElegirProfesor();" name="action">Cerrar<i class="material-icons left">close</i>
+      </button>
+    </div>
+  </div>
+
+  <div id="modalElegirActividad" class="modal modalxl"> <!--Nuevo Elegir Actividad-->
+    <div class="modal-content">
+            <div class="row" >
+              <input type="text" hidden id="id_profesor">
+                <h4 style="text-align: center;">ELIJA UNA ACTIVIDAD</h4>
+                <div id="actividades">
+
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarElegirActividad();" name="action">Cerrar<i class="material-icons left">close</i>
+      </button>
+    </div>
+  </div>
+  <div id="modalCompletarDatos" class="modal modalxl"> <!--Nuevo Completar Datos-->
+    <div class="modal-content">
+            <div class="row" >
+              <input type="text" hidden id="id_profesor2">
+              <input type="text" hidden id="id_actividad">
+                <h4 style="text-align: center;">COMPLETAR DATOS</h4>
+
+                      <div class="input-field col s4">
+                        <input  id="fecha" required type="date" >
+                        <label for="fecha">Fecha</label>
+                      </div>
+                      <div class="input-field col s4">
+                        <input  id="hora" required type="time" >
+                        <label for="hora">hora</label>
+                    </div>
+                      <div class="input-field col s4">
+                          <input  id="cupos" required type="number" >
+                          <label for="cupos">Cupos</label>
+                      </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light green" type="button" onclick="CargarNuevaClase();" name="action">Cargar Clase<i class="material-icons left">add</i>
+      </button>
+      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarCompletarDatos();" name="action">Cerrar<i class="material-icons left">close</i>
+      </button>
+    </div>
+  </div>
+        
+    </div> <!--Div del cierre de toda la pagina-->
+    <!--JavaScript at end of body for optimized loading-->
+    
+    <script src="./js/alum.js"></script>
+  </body>
+</html>

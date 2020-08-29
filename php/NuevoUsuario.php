@@ -19,6 +19,7 @@ $InsertarCliente -> bindParam(':birthdate',$datos[8]);
 $InsertarCliente->execute();
 
 $ObtenerID=$conexion->query("SELECT * FROM users ORDER BY ID DESC LIMIT 1");
+
 foreach($ObtenerID as $Act){
     echo $Act['ID'];
 break;

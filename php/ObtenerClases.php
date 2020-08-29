@@ -7,7 +7,7 @@ $datos=json_decode($datos,true);
 $fecha1=$datos[0];
 $fecha2=$datos[1];
 
-$ObtenerClases = $conexion->prepare("SELECT * FROM class WHERE date BETWEEN :fecha1 and :fecha2 ORDER BY act_name ASC");
+$ObtenerClases = $conexion->prepare("SELECT * FROM class WHERE date BETWEEN :fecha1 and :fecha2 ORDER BY time ASC");
 $ObtenerClases -> bindParam(':fecha1',$fecha1);
 $ObtenerClases -> bindParam(':fecha2',$fecha2);
 $ObtenerClases -> execute();

@@ -5,7 +5,6 @@ function Acceder(){
     $.post("./php/Acceder.php",{valorBusqueda:datos})
         .then((rta)=>{
             if(rta !="NO"){ 
-                console.log(rta);
                 if(rta==="admin"){
                     window.location.replace("admin.html");
                 }
@@ -13,7 +12,7 @@ function Acceder(){
                     window.location.replace("prof.html");
                 }
                 if(rta==="alumna"){
-                    window.location.replace("alum.html");
+                    window.location.replace("alum.html");                    
                 }
                 //window.location.replace("help.html");
             }else{
