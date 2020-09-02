@@ -58,6 +58,110 @@ function CargarClases(){
     });
 }
 
-function ReservarClase(id){
-    
+function ReservarClase(class_ID){
+    $("#inscribir").css("visibility", "hidden");
+    $("#desinscribir").css("visibility", "hidden");
+    $.post("./php/ObtenerIDUsuario.php")
+    .then((rta)=>{
+        user_ID=rta;
+        $.post("./php/ObtenerDatosClase.php",{valorBusqueda:class_ID})
+        .then((rta2)=>{
+            rta2=JSON.parse(rta2);
+            rta2.forEach((e)=>{
+                $("#id_profesor2").val(e.teacher_ID);
+                $.post("./php/ObtenerDatosActividad.php",{valorBusqueda:e.act_ID})
+                .then((act)=>{
+                    act=JSON.parse(act);
+                    $("#detalle_actividad").val(act[0].detail);
+                    $("#fecha").val(e.date);
+                    $("#hora").val(e.time);
+                    $("#cupos").val(e.max-e.remain);
+                })
+                var datos=[];
+                datos.push(class_ID,user_ID);
+                datos=JSON.stringify(datos);
+                $.post("./php/VerificarInscipcion.php",{valorBusqueda:datos})
+                .then((respuesta)=>{
+                    console.log(respuesta);
+                    if(respuesta=="SI"){
+                        $("#desinscribir").css("visibility", "visible");
+                    }else{
+                        $("#inscribir").css("visibility", "visible");
+                    }
+                })
+            })
+            $("#id_clase").val(class_ID);
+            $("#id_usuario").val(user_ID);
+            AbrirCompletarDatos();
+        })
+
+    })
+}
+
+function AbrirCompletarDatos(){
+    const elem = document.getElementById('modalCompletarDatos');
+    const instance = M.Modal.init(elem, {dismissible: false});
+    instance.open();
+}
+
+function CerrarCompletarDatos(){
+    const elem = document.getElementById('modalCompletarDatos');
+    const instance = M.Modal.init(elem, {dismissible: false});
+    instance.close();
+    var scroll= { "overflow": 'scroll'};
+    $("body").css(scroll);
+}
+
+function Inscribir(){
+    var datos =[];
+    user_ID=$("#id_usuario").val();
+    prof_ID=$("#id_profesor2").val();
+    class_ID=$("#id_clase").val();
+    datos.push(user_ID,prof_ID,class_ID);
+    datos=JSON.stringify(datos);
+    $.post("./php/InsertarReserva.php",{valorBusqueda:datos})
+    .then((rta)=>{
+        if(rta=="OK"){
+            CerrarCompletarDatos();
+            cuteAlert({
+                type: "success",
+                title: "TE ANOTASTE CON ÉXITO.",
+                message: "RECORDA ESTAR 10 MINUTOS ANTES. TE ESPERAMOS EL "+$("#fecha").val()+" A LAS "+$("#hora").val(),
+                buttonText: "OK"
+            })
+        }else{
+            cuteToast({
+                type: "error", // or 'info', 'error', 'warning'
+                message: "ERROR AL INSCRIBIRSE. CONTACTE AL ADMINISTRADOR",
+                timer: 3000
+            })
+        }
+    })
+}
+
+function Deinscribir(){
+    var datos =[];
+    user_ID=$("#id_usuario").val();
+    prof_ID=$("#id_profesor2").val();
+    class_ID=$("#id_clase").val();
+    datos.push(user_ID,prof_ID,class_ID);
+    datos=JSON.stringify(datos);
+    $.post("./php/CancelarReserva.php",{valorBusqueda:datos})
+    .then((rta)=>{
+        if(rta=="OK"){
+            CerrarCompletarDatos();
+            cuteAlert({
+                type: "success",
+                title: "TE DISTE DE BAJA CON EXITO.",
+                message: "RECORDA QUE PODES ANOTARTE DE NUEVO CUANDO QUIERAS",
+                buttonText: "OK"
+            })
+        }else{
+            cuteToast({
+                type: "error", // or 'info', 'error', 'warning'
+                message: "ERROR AL DARTE DE BAJA. CONTACTE AL ADMINISTRADOR",
+                timer: 3000
+            })
+        }
+    })
 }

@@ -20,6 +20,12 @@
         width: 80% !important;
         overflow: scroll;
         }
+        #detalle_actividad{
+          border:0;
+        }
+        #detalle_actividad:focus{
+          outline-width: 0;
+        }
     </style>
     <title>Bienvenido - ENHACORE </title>
   </head>
@@ -98,31 +104,36 @@
       </button>
     </div>
   </div>
+
   <div id="modalCompletarDatos" class="modal modalxl"> <!--Nuevo Completar Datos-->
     <div class="modal-content">
             <div class="row" >
               <input type="text" hidden id="id_profesor2">
-              <input type="text" hidden id="id_actividad">
-                <h4 style="text-align: center;">COMPLETAR DATOS</h4>
-
-                      <div class="input-field col s4">
-                        <input  id="fecha" required type="date" >
-                        <label for="fecha">Fecha</label>
-                      </div>
-                      <div class="input-field col s4">
-                        <input  id="hora" required type="time" >
-                        <label for="hora">hora</label>
-                    </div>
-                      <div class="input-field col s4">
-                          <input  id="cupos" required type="number" >
-                          <label for="cupos">Cupos</label>
-                      </div>
-      </div>
+              <input type="text" hidden id="id_clase">
+              <input type="text" hidden id="id_usuario">
+              <h4 style="text-align: center;">DETALLE DE LA CLASE</h4>
+              <textarea readonly id="detalle_actividad"></textarea>
+              <div class="row">
+                <div class="input-field col s4">
+                  <input  id="fecha" readonly type="date" >
+                  <label for="fecha">Fecha</label>
+                </div>
+                <div class="input-field col s4">
+                    <input id="hora" readonly type="time">
+                  <label for="hora">Hora de inicio</label>
+                </div>
+                <div class="input-field col s4">
+                  <input id="cupos" readonly type="number" value="0">
+                  <label for="cupos">Cupos Disponibles</label>
+                </div>
+            </div>
     </div>
     <div class="modal-footer">
-      <button class="btn waves-effect waves-light green" type="button" onclick="CargarNuevaClase();" name="action">Cargar Clase<i class="material-icons left">add</i>
+      <button  style="visibility:hidden;"  id="inscribir" class="btn waves-effect waves-light green" type="button" onclick="Inscribir();" name="action">INSCRIBIRME<i class="material-icons left">add</i>
       </button>
-      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarCompletarDatos();" name="action">Cerrar<i class="material-icons left">close</i>
+      <button   style="visibility:hidden;" id="desinscribir" class="btn waves-effect waves-light green" type="button" onclick="Deinscribir();" name="action">DARME DE BAJA<i class="material-icons left">add</i>
+      </button>
+      <button class="btn waves-effect waves-light red" type="button" onclick="CerrarCompletarDatos();" name="action">CERRAR<i class="material-icons left">close</i>
       </button>
     </div>
   </div>

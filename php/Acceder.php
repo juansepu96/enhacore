@@ -15,6 +15,7 @@ $hay=$IniciarSesion->RowCount();
 if($hay>0){
     foreach ($IniciarSesion as $Account){
         $_SESSION['name']=$Account['name'];
+        $_SESSION['userID']=$Account['ID'];
         $profile=$Account['profile'];
     }
     echo $profile;
