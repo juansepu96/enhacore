@@ -14,11 +14,16 @@ $hay=$IniciarSesion->RowCount();
 
 if($hay>0){
     foreach ($IniciarSesion as $Account){
-        $_SESSION['name']=$Account['name'];
-        $_SESSION['userID']=$Account['ID'];
-        $profile=$Account['profile'];
+        if($Account['status']=="ACTIVO"){
+            $_SESSION['name']=$Account['name'];
+            $_SESSION['userID']=$Account['ID'];
+            $profile=$Account['profile'];
+            echo $profile;
+        }else{
+            echo "INACTIVO";
+        }        
     }
-    echo $profile;
+    
 }else{
     echo "NO";
 }

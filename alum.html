@@ -27,7 +27,7 @@
           outline-width: 0;
         }
     </style>
-    <title>Bienvenido - ENHACORE </title>
+    <title>Reservá tu clase! - ENHACORE </title>
   </head>
 
   <body onload="CargarClases();">
@@ -105,7 +105,7 @@
     </div>
   </div>
 
-  <div id="modalCompletarDatos" class="modal modalxl"> <!--Nuevo Completar Datos-->
+  <div id="modalCompletarDatos" class="modal "> <!--Nuevo Completar Datos-->
     <div class="modal-content">
             <div class="row" >
               <input type="text" hidden id="id_profesor2">
@@ -129,9 +129,11 @@
             </div>
     </div>
     <div class="modal-footer">
-      <button  style="visibility:hidden;"  id="inscribir" class="btn waves-effect waves-light green" type="button" onclick="Inscribir();" name="action">INSCRIBIRME<i class="material-icons left">add</i>
+      <button   id="inscribir" class="btn waves-effect waves-light green" style="display:none;" type="button" onclick="Inscribir();" name="action">INSCRIBIRME<i class="material-icons left">add</i>
       </button>
-      <button   style="visibility:hidden;" id="desinscribir" class="btn waves-effect waves-light green" type="button" onclick="Deinscribir();" name="action">DARME DE BAJA<i class="material-icons left">add</i>
+      <button   id="desinscribir" class="btn waves-effect waves-light orange" style="display:none;"  type="button" onclick="Deinscribir();" name="action">DARME DE BAJA<i class="material-icons left">add</i>
+      </button>
+      <button   id="agotados" class="btn waves-effect waves-light gray"  style="display:none;"  type="button" >CUPOS AGOTADOS
       </button>
       <button class="btn waves-effect waves-light red" type="button" onclick="CerrarCompletarDatos();" name="action">CERRAR<i class="material-icons left">close</i>
       </button>

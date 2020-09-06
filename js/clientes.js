@@ -15,15 +15,22 @@ function CargarClientes(){
                 rta.forEach(element => {
                     id=element['ID'];
                     estado=element.status;
+                    imagen=element.img;
                     var htmlTags = '<tr id="'+id+'" class="filaClientes" onclick="AbrirCliente('+id+');">' +
                     '<td scope="row">' + element.name + '</td>' +
                     '<td>' + element.DNI + '</td>'+
                     '<td>' + element.phone+ '</td>';
                         if(estado==='INACTIVO'){
-                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td></tr>';
+                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td>';
                         }else{
-                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td></tr>';
-                        }   
+                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td>';
+                        } 
+                        if(imagen){
+                            imagen=imagen.substring(1);
+                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td></tr>';
+                        }else{
+                            htmlTags=htmlTags+'<td></td></tr>';
+                        }  
                     $('#tabla-clientes tbody').append(htmlTags);
                 });
             }else{
@@ -48,15 +55,22 @@ function BuscarClientes(){
                 rta.forEach(element => {
                     id=element['ID'];
                     estado=element.status;
+                    imagen=element.img;
                     var htmlTags = '<tr id="'+id+'" class="filaClientes" onclick="AbrirCliente('+id+');">' +
                     '<td scope="row">' + element.name + '</td>' +
                     '<td>' + element.DNI + '</td>'+
                     '<td>' + element.phone+ '</td>';
                         if(estado==='INACTIVO'){
-                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td></tr>';
+                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td>';
                         }else{
-                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td></tr>';
+                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td>';
                         }   
+                        if(imagen){
+                            imagen=imagen.substring(1);
+                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td></tr>';
+                        }else{
+                            htmlTags=htmlTags+'<td></td></tr>';
+                        }  
                     $('#tabla-clientes tbody').append(htmlTags);
                 });
             }else{

@@ -59,8 +59,9 @@ function CargarClases(){
 }
 
 function ReservarClase(class_ID){
-    $("#inscribir").css("visibility", "hidden");
-    $("#desinscribir").css("visibility", "hidden");
+    $("#inscribir").hide();
+    $("#desinscribir").hide();
+    $("#agotados").hide();
     $.post("./php/ObtenerIDUsuario.php")
     .then((rta)=>{
         user_ID=rta;
@@ -75,20 +76,26 @@ function ReservarClase(class_ID){
                     $("#detalle_actividad").val(act[0].detail);
                     $("#fecha").val(e.date);
                     $("#hora").val(e.time);
-                    $("#cupos").val(e.max-e.remain);
+                    var cupos = e.max-e.remain;
+                    $("#cupos").val(cupos);
+                    var datos=[];
+                    datos.push(class_ID,user_ID);
+                    datos=JSON.stringify(datos);
+                    $.post("./php/VerificarInscipcion.php",{valorBusqueda:datos})
+                    .then((respuesta)=>{
+                        if(respuesta=="SI"){
+                            $("#desinscribir").show();
+                        }else{
+                            if(cupos>0){
+                                $("#inscribir").show();
+                            }else{
+                                $("#agotados").show();
+                            }
+                        }
+                    })
+
                 })
-                var datos=[];
-                datos.push(class_ID,user_ID);
-                datos=JSON.stringify(datos);
-                $.post("./php/VerificarInscipcion.php",{valorBusqueda:datos})
-                .then((respuesta)=>{
-                    console.log(respuesta);
-                    if(respuesta=="SI"){
-                        $("#desinscribir").css("visibility", "visible");
-                    }else{
-                        $("#inscribir").css("visibility", "visible");
-                    }
-                })
+                             
             })
             $("#id_clase").val(class_ID);
             $("#id_usuario").val(user_ID);

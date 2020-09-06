@@ -4,7 +4,8 @@ function Acceder(){
     datos = user+"@#"+pass;
     $.post("./php/Acceder.php",{valorBusqueda:datos})
         .then((rta)=>{
-            if(rta !="NO"){ 
+            console.log(rta);
+            if(rta !="NO" && rta!="INACTIVO"){ 
                 if(rta==="admin"){
                     window.location.replace("admin.html");
                 }
@@ -16,11 +17,22 @@ function Acceder(){
                 }
                 //window.location.replace("help.html");
             }else{
-                cuteToast({
-                    type: "error", // or 'info', 'error', 'warning' 
-                    message: "ERROR AL INICIAR SESION",
-                    timer: 3000
-                  })
+                if(rta=="NO"){
+                    cuteToast({
+                        type: "error", // or 'info', 'error', 'warning' 
+                        message: "ERROR AL INICIAR SESION",
+                        timer: 3000
+                    })
+                }else{
+                    console.log("entre");
+                    cuteAlert({
+                        type: "error",
+                        title: "SU CUENTA SE ENCUENTRA SUSPENDIDA",
+                        message: "POR FAVOR, CONTACTESE CON LA ADMINISTRACION.",
+                        buttonText: "OK"
+                    });
+                }
+                
             }
         })
 }
