@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script> <!--Moments Library-->
+    <script src="./js/cute-alert.js"></script>
+    <link rel="stylesheet" href="./styles/style2.css">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    
+    <!--Let browser know website is optimized for mobile-->
+    <link rel="stylesheet" href="./styles/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8"/>
+    <style>
+      .modalxl {
+        max-height: 80%;
+        width: 80% !important;
+        overflow: scroll;
+        }
+    </style>
+    <title>Mi Perfil - ENHACORE </title>
+  </head>
+
+  <body onload="CargarDatosAlum();">
+    <div class="container-fluid">
+        <div id="menu"> <!--Menu de Navegacion-->
+          <nav>
+              <div class="nav-wrapper violeta">
+                  <img id="logo_menu" src="./img/imagotipo.png">
+                
+                <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                  <li><a href="./prof.html"><i class="material-icons left">assistant_photo</i>Mis Clases</a></li>
+                  <li   class="active"><a href="./profile.html"><i class="material-icons left">account_circle</i>Perfil</a></li>
+                  <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+                </ul>
+  
+                
+              </div>
+            </nav>
+            <ul id="slide-out" class="sidenav">
+              <li><div class="user-view" style="text-align: center;">
+                <div>
+                  <img src="./img/imagotipo.png">
+                </div>
+              </div></li>
+                  <li><a href="./prof.html"><i class="material-icons left">assistant_photo</i>Mis Clases</a></li>
+                  <li class="active"><a href="./profile.html"><i class="material-icons left">account_circle</i>Perfil</a></li>
+                  <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+            </ul>
+      </div> 
+
+      <div class="container bootstrap snippet " style="width:100%"> 
+        <div class="row text-center">
+              <div class="col-sm-10 " id="name"></div>
+        </div>
+        <div class="row">
+              <div class="col-sm-3"><!--left col-->
+   
+          <div class="text-center">
+            <img id="profile_photo" class="avatar img-circle img-thumbnail" alt="avatar">
+            <h6>Actualizar mi foto</h6>
+            <form id="foto">
+             <input type="file" name="imagen" style="color:transparent;" onchange="CambiarImagen();">
+            </form>
+          </div></hr><br>
+
+            </div><!--/col-3-->
+            <div class="col-sm-9">
+               
+              <div class="tab-content">
+                <div class="tab-pane active" id="home">
+                  <input type="text" hidden id="id_persona">
+                          <div class="form-group">
+                              <div class="col-xs-6">
+                                  <label for="nombre"><h4>Nombre Completo</h4></label>
+                                  <input type="text" class="form-control" name="nombre" id="nombre" title="Ingresa tu nombre completo.">
+                              </div>
+                          </div>     
+                          <div class="form-group">
+                            <div class="col-xs-6">
+                                <label for="username"><h4>Nombre de usuario</h4></label>
+                                <input type="text" disabled class="form-control"  id="username" title="Con este usuario deberás acceder.">
+                            </div>
+                        </div>            
+                        
+                        <div class="form-group">
+                              
+                            <div class="col-xs-6">
+                                <label for="DNI"><h4>DNI</h4></label>
+                                <input type="text" class="form-control" id="DNI" placeholder="DNI..." >
+                            </div>
+                        </div>
+
+
+                          <div class="form-group">
+                              
+                              <div class="col-xs-6">
+                                  <label for="phone"><h4>Telefono</h4></label>
+                                  <input type="text" class="form-control"  id="telefono" placeholder="Telefono.." title="Ingresa tu numero de teléfono.">
+                              </div>
+                          </div>
+              
+                          <div class="form-group">
+                              <div class="col-xs-6">
+                                 <label for="direccion"><h4>Direccion</h4></label>
+                                  <input type="text" class="form-control" id="direccion" placeholder="Ej. Av. Alem 123" title="Ingrese su direccion.">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              
+                              <div class="col-xs-6">
+                                  <label for="fnacimiento"><h4>Fecha de Nacimiento</h4></label>
+                                  <input type="date" class="form-control" name="fnacimiento" id="fnacimiento"  title="Indique su fecha de nacimiento.">
+                              </div>
+                          </div>
+                          
+                          <div class="form-group">
+                               <div class="col-xs-12">
+                                    <br>
+                                    <button  class="btn waves-effect waves-light green"  type="button" onclick="ActualizarDatos();" >GUARDAR CAMBIOS</button>
+                                </div>
+                          </div>
+                  
+                  <hr>
+                  
+                 </div><!--/tab-pane-->
+              </div><!--/tab-content-->
+    
+            </div><!--/col-9-->
+        </div><!--/row-->
+                                    
+        
+    </div> <!--Div del cierre de toda la pagina-->
+    <!--JavaScript at end of body for optimized loading-->
+    
+    <script src="./js/profile.js"></script>
+  </body>
+</html>

@@ -170,7 +170,7 @@ function AbrirCliente(id){
                 $("#telefono_cliente").val(rta[0].phone);
                 $("#nacimiento_cliente").val(rta[0].birthdate);
                 $("#estado_cliente").val(rta[0].state);
-                CargarClases(id);
+                CargarClases(rta[0].ID);
             }            
         };
     });
@@ -223,4 +223,22 @@ function CerrarVerCliente(){
     $('#verCliente')[0].reset();
     var scroll= { "overflow": 'scroll'};
     $("body").css(scroll);
+}
+
+function CargarClases(id){
+    $(".filaInscriptos").remove();
+    $.post("./php/ObtenerInscriptos2.php",{valorBusqueda:id})
+    .then((rta)=>{
+        rta=JSON.parse(rta);
+        if(rta.length>0){
+            rta.forEach((e)=>{
+                fecha=moment(e.date);
+                fecha=fecha.format("DD/MM/YYYY");
+                var htmlTags = '<tr class="filaInscriptos" >' +
+                '<td scope="row">' + fecha + '</td>' +
+                '<td>' + e.act_name+ '</td></tr>';
+                $('#inscriptos tbody').append(htmlTags);
+            });
+        }
+    })
 }

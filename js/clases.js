@@ -32,7 +32,7 @@ function CargarClases(){
                     fecha=fecha.format("DD/MM/YYYY");
                     hora = e.time;
                     hora=hora.substring(0,5);
-                    var htmlTags = '<tr class="filaClases" onclick="AbrirClase('+e.ID+');">' +
+                    var htmlTags = '<tr class="filaClases" onclick="CargarInscriptos('+e.ID+');">' +
                     '<td scope="row">' + fecha + '</td>' +
                     '<td scope="row">' + hora + '</td>' +
                     '<td>' + e.act_name + '</td>'+
@@ -199,7 +199,7 @@ function ActualizarTabla(){
                     fecha=fecha.format("DD/MM/YYYY");
                     hora = e.time;
                     hora=hora.substring(0,5);
-                    var htmlTags = '<tr class="filaClases" onclick="AbrirClase('+e.ID+');">' +
+                    var htmlTags = '<tr class="filaClases" onclick="CargarInscriptos('+e.ID+');">' +
                     '<td scope="row">' + fecha + '</td>' +
                     '<td scope="row">' + hora + '</td>' +
                     '<td>' + e.act_name + '</td>'+
@@ -212,4 +212,36 @@ function ActualizarTabla(){
                 $('#errorBusqueda').append('<h3>NO HAY CLASES PARA MOSTRAR<h3>');
             }
     });
+}
+
+
+function CargarInscriptos(id){
+    $(".filaInscriptos").remove();
+    $.post("./php/ObtenerInscriptos.php",{valorBusqueda:id})
+    .then((rta)=>{
+        rta=JSON.parse(rta);
+        if(rta.length>0){
+            rta.forEach((e)=>{
+                fecha=moment(e.date);
+                fecha=fecha.format("DD/MM/YYYY");
+                var htmlTags = '<tr class="filaInscriptos" >' +
+                '<td scope="row">' + fecha + '</td>' +
+                '<td>' + e.name+ '</td></tr>';
+                $('#inscriptos tbody').append(htmlTags);
+            });
+
+            const elem = document.getElementById('modalVerInscriptos');
+            const instance = M.Modal.init(elem, {dismissible: false});
+            instance.open();
+        }
+    })
+}
+
+function CerrarVerInscriptos(){
+    const elem = document.getElementById('modalVerInscriptos');
+    const instance = M.Modal.init(elem, {dismissible: false});
+    instance.close();
+    var scroll= { "overflow": 'scroll'};
+    $("body").css(scroll);
+
 }

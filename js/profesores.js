@@ -253,3 +253,25 @@ function CerrarVerProfesor(){
     $("body").css(scroll);
     
 }
+
+
+function CargarClases(id){
+    $(".filaInscriptos").remove();
+    $.post("./php/ObtenerInscriptos3.php",{valorBusqueda:id})
+    .then((rta)=>{
+        rta=JSON.parse(rta);
+        if(rta.length>0){
+            rta.forEach((e)=>{
+                fecha=moment(e.date);
+                fecha=fecha.format("DD/MM/YYYY");
+                hora = e.time;
+                hora=hora.substring(0,5);
+                var htmlTags = '<tr class="filaInscriptos" >' +
+                '<td scope="row">' + fecha + '</td>' +
+                '<td scope="row">' + hora + '</td>' +
+                '<td>' + e.act_name+ '</td></tr>';
+                $('#inscriptos tbody').append(htmlTags);
+            });
+        }
+    })
+}

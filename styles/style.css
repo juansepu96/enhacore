@@ -118,7 +118,7 @@ body{
 }
 
 #logo_menu{
-    width:150px;
+    width:130px;
     height: 60px;
 }
 
@@ -239,6 +239,10 @@ body{
     background-color:#232323;
     color:#fff;
     text-decoration:none;
+  }
+
+  .user-view img{
+      width:80%;
   }
 
 
