@@ -14,6 +14,12 @@ $path = '../img/'; // upload directory
             if(move_uploaded_file($tmp,$path))  {
                 $act=$_POST['id'];
                 include_once './PDO.php';
+
+                $UpdateClases=$conexion->prepare("UPDATE class SET act_img=:act_img WHERE act_ID=:id");
+                $UpdateClases->bindParam(':id',$act);
+                $UpdateClases->bindParam(':act_img',$path);
+                $UpdateClases->execute();
+
                 $insert = $conexion->prepare("UPDATE acts SET img=:img WHERE ID=:id");
                 $insert -> bindParam(':img',$path);
                 $insert -> bindparam(':id',$act);
