@@ -55,7 +55,11 @@ function NuevaClase(){
             var html="";
             rta.forEach((e)=>{
                 if(e.status="ACTIVO"){
-                    imagen=e.img.substring(1);
+                    if(e.img){
+                        imagen=e.img.substring(1);
+                    }else{
+                        imagen=e.img;
+                    }
                     html = html + ' <div class="col s12 m6 l3" style="width:90%;" onclick="ElegirActividad('+e.ID+');"> '+
                                 ' <div class="card profile-card-3"> ' +
                                     ' <div class="background-block">' +

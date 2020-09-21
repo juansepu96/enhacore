@@ -11,6 +11,7 @@ $ObtenerNombreProf->bindParam(':id',$datos[0]);
 $ObtenerNombreProf->execute();
 foreach($ObtenerNombreProf as $NombreProf){
     $profesor=$NombreProf['name'];
+    $profesor_img=" ";
     $profesor_img=$NombreProf['img'];
 }
 
@@ -20,6 +21,7 @@ $ObtenerNombreAct->bindParam(':id',$datos[1]);
 $ObtenerNombreAct->execute();
 foreach($ObtenerNombreAct as $NombreAct){
     $actividad=$NombreAct['name'];
+    $act_img=" ";
     $act_img=$NombreAct['img'];
     $detail=$NombreAct['detail'];
 }
