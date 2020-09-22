@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script> <!--Moments Library-->
+    <script src="./js/cute-alert.js"></script>
+    <link rel="stylesheet" href="./styles/style2.css">
+    
+    <!--Let browser know website is optimized for mobile-->
+    <link rel="stylesheet" href="./styles/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8"/>
+    <style>
+      .modalxl {
+        max-height: 80%;
+        width: 80% !important;
+        overflow: scroll;
+        }
+        #detalle_actividad{
+          border:0;
+        }
+        #detalle_actividad:focus{
+          outline-width: 0;
+        }
+    </style>
+    <title>Actividades - ENHACORE </title>
+  </head>
+
+  <body onload="CargarActividades();">
+    <div class="container-fluid">
+      <div id="menu"> <!--Menu de Navegacion-->
+        <nav>
+            <div class="nav-wrapper violeta">
+                <img id="logo_menu" src="./img/imagotipo.png">
+              
+              <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                <li  ><a href="./alum.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+                <li class="active"><a href="./alum_actividades.html"><i class="material-icons left">assignment_ind</i>Actividades</a></li>
+                <li><a href="./alum_profesores.html"><i class="material-icons left">description</i>Profesores</a></li>
+                <li><a href="./profile.html"><i class="material-icons left">account_circle</i>Perfil</a></li>
+                <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+              </ul>
+
+              
+            </div>
+          </nav>
+          <ul id="slide-out" class="sidenav">
+            <li><div class="user-view" style="text-align: center;">
+              <div>
+                <img src="./img/imagotipo.png">
+              </div>
+            </div></li>
+                <li  ><a href="./alum.html"><i class="material-icons left">assistant_photo</i>Clases</a></li>
+                <li class="active"><a href="./alum_actividades.html"><i class="material-icons left">assignment_ind</i>Actividades</a></li>
+                <li><a href="./alum_profesores.html"><i class="material-icons left">description</i>Profesores</a></li>
+                <li><a href="./profile.html"><i class="material-icons left">account_circle</i>Perfil</a></li>
+                <li><a href="./checkout.html"><i class="material-icons left">cancel</i>Cerrar sesión</a></li>
+          </ul>
+    </div>
+
+   
+<h3 style="text-align: center;">Estan son las actividades que tenemos disponibles para vos! ♥</h3>
+  <div id="actividades"> <!--Actividades-->
+          
+  </div>
+
+ 
+        
+    </div> <!--Div del cierre de toda la pagina-->
+    <!--JavaScript at end of body for optimized loading-->
+    
+    <script src="./js/alum_actividades.js"></script>
+  </body>
+</html>

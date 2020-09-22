@@ -30,8 +30,9 @@ function CargarClases(){
                     hora = e.time;
                     hora=hora.substring(0,5);
                     act_img=e.act_img.substring(1)
+                    prof_img=e.prof_img;
                     if(prof_img){
-                        prof_img=e.prof_img.substring(1);
+                        prof_img=prof_img.substring(1);
                     }                    
                     html = html + ' <div class="col s12 m6 l3" onclick="ReservarClase('+e.ID+')";> '+
                                 ' <div class="card profile-card-3" style="height:100%;width:90%">' +
