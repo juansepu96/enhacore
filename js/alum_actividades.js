@@ -13,8 +13,8 @@ function CargarActividades(){
             var html="";
             rta.forEach((e)=>{
                     imagen=e.img.substring(1);
-                    html = html + ' <div class="col s12 m6 l3" style="width:90%;" onclick="CargarRestantes('+e.ID+');"> '+
-                    ' <div class="card profile-card-3"> ' +
+                    html = html + ' <div class="col s12 m6 l3"> '+
+                                    ' <div class="card profile-card-3" style="height:100%;width:90%">' +
                         ' <div class="background-block">' +
                             '<img src="'+imagen+'" alt="profile-sample1" class="background2"/>' +
                         '</div>' +
