@@ -8,38 +8,35 @@ $(document).ready(function(){
 function CargarClientes(){  
     $(".filaClientes").remove();
     $("#errorBusqueda h3").remove();
-    $.post("./php/ObtenerClientesIniciales.php",{}, function(rta) {
-        if(rta){ 
+    $.post("./php/ObtenerClientesIniciales.php")
+    .then((rta)=> {
             rta = JSON.parse(rta);
             if(rta){
                 rta.forEach(element => {
                     id=element['ID'];
                     estado=element.status;
                     imagen=element.img;
-                    var htmlTags = '<tr id="'+id+'" class="filaClientes" onclick="AbrirCliente('+id+');">' +
-                    '<td scope="row">' + element.name + '</td>' +
-                    '<td>' + element.DNI + '</td>'+
-                    '<td>' + element.phone+ '</td>';
+                    var htmlTags = '<tr id="'+id+'" class="filaClientes" >' +
+                    '<td scope="row" onclick="AbrirCliente('+id+');">' + element.name + '</td>' +
+                    '<td onclick="AbrirCliente('+id+');">' + element.DNI + '</td>'+
+                    '<td onclick="AbrirCliente('+id+');">' + element.phone+ '</td>';
                         if(estado==='INACTIVO'){
-                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td>';
+                            htmlTags=htmlTags+'<td onclick="AbrirCliente('+id+');" style="color:red;font-weight:bold;">NO ACTIVO</td>';
                         }else{
-                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td>';
+                            htmlTags=htmlTags+'<td onclick="AbrirCliente('+id+');" style="color:green;font-weight:bold;">ACTIVO</td>';
                         } 
                         if(imagen){
                             imagen=imagen.substring(1);
-                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td></tr>';
+                            htmlTags=htmlTags+ '<td onclick="AbrirCliente('+id+');"><img src="'+imagen+'" class="imagen"/></td></tr>';
                         }else{
-                            htmlTags=htmlTags+'<td></td></tr>';
+                            htmlTags=htmlTags+'<td onclick="AbrirCliente('+id+');"></td>';
                         }  
+                    htmlTags=htmlTags+'<td onclick="EliminarAlumno('+id+');"><i class="material-icons" style="color:red">delete_forever</i></td></tr>';
                     $('#tabla-clientes tbody').append(htmlTags);
                 });
             }else{
                 $('#errorBusqueda').append('<h3>NO HAY CLIENTES PARA MOSTRAR<h3>');
-            }
-            
-        }else{
-            $('#errorBusqueda').append('<h3>ERROR DE CONEXIÓN CON LA BASE DE DATOS<h3>');
-        }
+            };
     });
 }
 
@@ -48,37 +45,35 @@ function BuscarClientes(){
     $(".filaClientes").remove();
     $("#errorBusqueda h3").remove();
     $("#buscadorCliente").val("");
-    $.post("./php/BuscarClientes.php",{valorBusqueda:id}, function(rta) {
-        if(rta){ 
+    $.post("./php/BuscarClientes.php",{valorBusqueda:id})
+    .then((rta)=> {
             rta = JSON.parse(rta);
             if(rta){
                 rta.forEach(element => {
                     id=element['ID'];
                     estado=element.status;
                     imagen=element.img;
-                    var htmlTags = '<tr id="'+id+'" class="filaClientes" onclick="AbrirCliente('+id+');">' +
-                    '<td scope="row">' + element.name + '</td>' +
-                    '<td>' + element.DNI + '</td>'+
-                    '<td>' + element.phone+ '</td>';
+                    var htmlTags = '<tr id="'+id+'" class="filaClientes" >' +
+                    '<td scope="row" onclick="AbrirCliente('+id+');">' + element.name + '</td>' +
+                    '<td onclick="AbrirCliente('+id+');">' + element.DNI + '</td>'+
+                    '<td onclick="AbrirCliente('+id+');">' + element.phone+ '</td>';
                         if(estado==='INACTIVO'){
-                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td>';
+                            htmlTags=htmlTags+'<td onclick="AbrirCliente('+id+');" style="color:red;font-weight:bold;">NO ACTIVO</td>';
                         }else{
-                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td>';
-                        }   
+                            htmlTags=htmlTags+'<td onclick="AbrirCliente('+id+');" style="color:green;font-weight:bold;">ACTIVO</td>';
+                        } 
                         if(imagen){
                             imagen=imagen.substring(1);
-                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td></tr>';
+                            htmlTags=htmlTags+ '<td onclick="AbrirCliente('+id+');"><img src="'+imagen+'" class="imagen"/></td></tr>';
                         }else{
-                            htmlTags=htmlTags+'<td></td></tr>';
+                            htmlTags=htmlTags+'<td onclick="AbrirCliente('+id+');"></td>';
                         }  
+                    htmlTags=htmlTags+'<td onclick="EliminarAlumno('+id+');"><i class="material-icons" style="color:red">delete_forever</i></td></tr>';
                     $('#tabla-clientes tbody').append(htmlTags);
                 });
             }else{
                 $('#errorBusqueda').append('<h3>NO HAY CLIENTES PARA MOSTRAR<h3>');
-            }            
-        }else{
-            $('#errorBusqueda').append('<h3>ERROR DE CONEXIÓN CON LA BASE DE DATOS<h3>');
-        }
+            }   
     });
 
 }
@@ -241,4 +236,34 @@ function CargarClases(id){
             });
         }
     })
+}
+
+function EliminarAlumno(id){
+    cuteAlert({
+        type: "question",
+        title: "¿Confirma que desea eliminar el Alumno?",
+        message: "Se eliminarán los datos y las clases asociadas de forma permanente",
+        confirmText: "OK",
+        cancelText: "Cancelar"
+      }).then((e)=>{
+        if ( e == ("Thanks")){
+            $.post("./php/EliminarAlumno.php",{valorBusqueda:id})
+            .then(()=>{
+                cuteToast({
+                    type: "success", // or 'info', 'error', 'warning'
+                    message: "Alumno eliminado con éxito.",
+                    timer: 5000
+                })
+                .then(()=>{
+                    location.reload();
+                })
+            })
+      } else {
+            cuteToast({
+            type: "error", // or 'info', 'error', 'warning'
+            message: "ACCION CANCELADA",
+            timer: 5000
+          })
+        }
+      })
 }
