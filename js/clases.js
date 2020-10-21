@@ -38,7 +38,8 @@ function CargarClases(){
                     '<td>' + e.act_name + '</td>'+
                     '<td>' + e.teacher_name + '</td>'+
                     '<td>' + e.max + '</td>'+
-                    '<td>' + e.remain + '</td></tr>';
+                    '<td>' + e.remain + '</td>'+
+                    '<td onclick="EliminarClase('+e.ID+');"><i class="material-icons" style="color:red">delete_forever</i></td></tr>';
                     $('#tabla-clases tbody').append(htmlTags);
                 });
             }else{
@@ -209,7 +210,8 @@ function ActualizarTabla(){
                     '<td>' + e.act_name + '</td>'+
                     '<td>' + e.teacher_name + '</td>'+
                     '<td>' + e.max + '</td>'+
-                    '<td>' + e.remain + '</td></tr>';
+                    '<td>' + e.remain + '</td>'+
+                    '<td onclick="EliminarClase('+e.ID+');"><i class="material-icons" style="color:red">delete_forever</i></td></tr>';
                     $('#tabla-clases tbody').append(htmlTags);
                 });
             }else{
@@ -248,4 +250,34 @@ function CerrarVerInscriptos(){
     var scroll= { "overflow": 'scroll'};
     $("body").css(scroll);
 
+}
+
+function EliminarClase(id){
+    cuteAlert({
+        type: "question",
+        title: "¿Confirma que desea eliminar la clase?",
+        message: "Se eliminarán los datos asociados de forma permanente",
+        confirmText: "OK",
+        cancelText: "Cancelar"
+      }).then((e)=>{
+        if ( e == ("confirm")){
+            $.post("./php/EliminarClase.php",{valorBusqueda:id})
+            .then(()=>{
+                cuteToast({
+                    type: "success", // or 'info', 'error', 'warning'
+                    message: "Clase eliminada con éxito.",
+                    timer: 5000
+                })
+                .then(()=>{
+                    location.reload();
+                })
+            })
+      } else {
+            cuteToast({
+            type: "error", // or 'info', 'error', 'warning'
+            message: "ACCION CANCELADA",
+            timer: 5000
+          })
+        }
+      })
 }

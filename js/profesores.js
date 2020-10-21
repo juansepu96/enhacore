@@ -55,20 +55,20 @@ function BuscarProfesores(){
                     id=element['ID'];
                     estado=element.status;
                     imagen=element.img;
-                    var htmlTags = '<tr id="'+id+'" class="filaProfesores" onclick="AbrirProfesor('+id+');">' +
-                    '<td scope="row">' + element.name + '</td>' +
-                    '<td>' + element.DNI + '</td>'+
-                    '<td>' + element.phone+ '</td>';
+                    var htmlTags = '<tr id="'+id+'" class="filaProfesores" >' +
+                    '<td scope="row" onclick="AbrirProfesor('+id+');">' + element.name + '</td>' +
+                    '<td onclick="AbrirProfesor('+id+');">' + element.DNI + '</td>'+
+                    '<td onclick="AbrirProfesor('+id+');">' + element.phone+ '</td>';
                         if(estado==='INACTIVO'){
-                            htmlTags=htmlTags+'<td style="color:red;font-weight:bold;">NO ACTIVO</td>';
+                            htmlTags=htmlTags+'<td onclick="AbrirProfesor('+id+');" style="color:red;font-weight:bold;">NO ACTIVO</td>';
                         }else{
-                            htmlTags=htmlTags+'<td style="color:green;font-weight:bold;">ACTIVO</td>';
+                            htmlTags=htmlTags+'<td onclick="AbrirProfesor('+id+');" style="color:green;font-weight:bold;">ACTIVO</td>';
                         }   
                         if(imagen){
                             imagen=imagen.substring(1);
-                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td>';
+                            htmlTags=htmlTags+ '<td onclick="AbrirProfesor('+id+');"><img src="'+imagen+'" class="imagen"/></td>';
                         }else{
-                            htmlTags=htmlTags+'<td></td>';
+                            htmlTags=htmlTags+'<td onclick="AbrirProfesor('+id+');"></td>';
                         }
                         htmlTags=htmlTags+'<td onclick="EliminarProfesor('+id+');"><i class="material-icons" style="color:red">delete_forever</i></td></tr>';
 
