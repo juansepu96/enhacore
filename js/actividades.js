@@ -16,17 +16,18 @@ function CargarActividades(){
                     id=element['ID'];
                     imagen=element.img;
                                     
-                    var htmlTags = '<tr id="'+id+'" class="filaActividades" onclick="AbrirActividad('+id+');">' +
-                    '<td scope="row">' + id + '</td>' +
-                    '<td>' + element.name + '</td>'+
-                    '<td>' + element.detail+ '</td>';
+                    var htmlTags = '<tr id="'+id+'" class="filaActividades">' +
+                    '<td scope="row" onclick="AbrirActividad('+id+');">' + id + '</td>' +
+                    '<td onclick="AbrirActividad('+id+');">' + element.name + '</td>'+
+                    '<td onclick="AbrirActividad('+id+');">' + element.detail+ '</td>';
                     if(imagen){
                         imagen=imagen.substring(1);
-                        htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td></tr>';
+                        htmlTags=htmlTags+ '<td onclick="AbrirActividad('+id+');"><img src="'+imagen+'" class="imagen"/></td>';
                     }else{
-                        htmlTags=htmlTags+'<td></td></tr>';
+                        htmlTags=htmlTags+'<td onclick="AbrirActividad('+id+');"></td>';
                     }
-                   
+                    htmlTags=htmlTags+'<td onclick="EliminarActividad('+id+');"><i class="material-icons" style="color:red">delete_forever</i></td></tr>';
+
                     $('#tabla-actividades tbody').append(htmlTags);
                 });
             }else{
@@ -174,4 +175,34 @@ function CerrarVerActividad(){
     instance.close();
     var scroll= { "overflow": 'scroll'};
     $("body").css(scroll);
+}
+
+function EliminarActividad(id){
+    cuteAlert({
+        type: "question",
+        title: "¿Confirma que desea eliminar la actividad?",
+        message: "Se eliminarán los datos asociados de forma permanente",
+        confirmText: "OK",
+        cancelText: "Cancelar"
+      }).then((e)=>{
+        if ( e == ("confirm")){
+            $.post("./php/EliminarActividad.php",{valorBusqueda:id})
+            .then(()=>{
+                cuteToast({
+                    type: "success", // or 'info', 'error', 'warning'
+                    message: "Actividad eliminada con éxito.",
+                    timer: 5000
+                })
+                .then(()=>{
+                    location.reload();
+                })
+            })
+      } else {
+            cuteToast({
+            type: "error", // or 'info', 'error', 'warning'
+            message: "ACCION CANCELADA",
+            timer: 5000
+          })
+        }
+      })
 }
