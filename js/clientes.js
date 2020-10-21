@@ -27,7 +27,7 @@ function CargarClientes(){
                         } 
                         if(imagen){
                             imagen=imagen.substring(1);
-                            htmlTags=htmlTags+ '<td onclick="AbrirCliente('+id+');"><img src="'+imagen+'" class="imagen"/></td></tr>';
+                            htmlTags=htmlTags+ '<td onclick="AbrirCliente('+id+');"><img src="'+imagen+'" class="imagen"/></td>';
                         }else{
                             htmlTags=htmlTags+'<td onclick="AbrirCliente('+id+');"></td>';
                         }  
@@ -64,7 +64,7 @@ function BuscarClientes(){
                         } 
                         if(imagen){
                             imagen=imagen.substring(1);
-                            htmlTags=htmlTags+ '<td onclick="AbrirCliente('+id+');"><img src="'+imagen+'" class="imagen"/></td></tr>';
+                            htmlTags=htmlTags+ '<td onclick="AbrirCliente('+id+');"><img src="'+imagen+'" class="imagen"/></td>';
                         }else{
                             htmlTags=htmlTags+'<td onclick="AbrirCliente('+id+');"></td>';
                         }  
@@ -246,7 +246,7 @@ function EliminarAlumno(id){
         confirmText: "OK",
         cancelText: "Cancelar"
       }).then((e)=>{
-        if ( e == ("Thanks")){
+        if ( e == ("confirm")){
             $.post("./php/EliminarAlumno.php",{valorBusqueda:id})
             .then(()=>{
                 cuteToast({

@@ -5,7 +5,7 @@ require_once "PDO.php";
 $dato=$_POST['valorBusqueda'];
 
 //Eliminar perfil
-$EliminarPerfil = $conexion->prepare("DELETE users WHERE ID=:dato" );
+$EliminarPerfil = $conexion->prepare("DELETE FROM users WHERE ID=:dato" );
 $EliminarPerfil -> bindParam(':dato',$dato);
 $EliminarPerfil->execute();
 
@@ -22,7 +22,7 @@ foreach($ObtenerClases as $Clase){
 }
 
 //eliminar todas las reservas
-$ObtenerClases = $conexion->prepare("SELECT * FROM bookings WHERE user_ID=:id ");
+$ObtenerClases = $conexion->prepare("DELETE FROM bookings WHERE user_ID=:id ");
 $ObtenerClases -> bindParam(':id',$dato);
 $ObtenerClases -> execute();
 
