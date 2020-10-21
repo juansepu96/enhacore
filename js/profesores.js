@@ -28,10 +28,12 @@ function CargarProfesores(){
 
                         if(imagen){
                             imagen=imagen.substring(1);
-                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td></tr>';
+                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td>';
                         }else{
-                            htmlTags=htmlTags+'<td></td></tr>';
+                            htmlTags=htmlTags+'<td></td>';
                         }
+                        htmlTags=htmlTags+'<td onclick="EliminarProfesor('+id+');"><i class="material-icons" style="color:red">delete_forever</i></td></tr>';
+
                     $('#tabla-profesores tbody').append(htmlTags);
                 });
             }else{
@@ -64,10 +66,12 @@ function BuscarProfesores(){
                         }   
                         if(imagen){
                             imagen=imagen.substring(1);
-                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td></tr>';
+                            htmlTags=htmlTags+ '<td><img src="'+imagen+'" class="imagen"/></td>';
                         }else{
-                            htmlTags=htmlTags+'<td></td></tr>';
+                            htmlTags=htmlTags+'<td></td>';
                         }
+                        htmlTags=htmlTags+'<td onclick="EliminarProfesor('+id+');"><i class="material-icons" style="color:red">delete_forever</i></td></tr>';
+
                     $('#tabla-profesores tbody').append(htmlTags);
                 });
             }else{
@@ -274,4 +278,34 @@ function CargarClases(id){
             });
         }
     })
+}
+
+function EliminarProfesor(id){
+    cuteAlert({
+        type: "question",
+        title: "¿Confirma que desea eliminar el Profesor?",
+        message: "Se eliminarán los datos y las clases asociadas de forma permanente",
+        confirmText: "OK",
+        cancelText: "Cancelar"
+      }).then((e)=>{
+        if ( e == ("confirm")){
+            $.post("./php/EliminarProfesor.php",{valorBusqueda:id})
+            .then(()=>{
+                cuteToast({
+                    type: "success", // or 'info', 'error', 'warning'
+                    message: "Profesor eliminado con éxito.",
+                    timer: 5000
+                })
+                .then(()=>{
+                    location.reload();
+                })
+            })
+      } else {
+            cuteToast({
+            type: "error", // or 'info', 'error', 'warning'
+            message: "ACCION CANCELADA",
+            timer: 5000
+          })
+        }
+      })
 }
